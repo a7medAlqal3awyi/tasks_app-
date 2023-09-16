@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const Color blueColor = Color(0xFF4e5ae8);
 const Color yellowColor = Color(0xFFFFB746);
@@ -10,15 +14,38 @@ Color darkHeaderColor = Colors.grey.shade800;
 
 class Themes {
   static final lightTheme = ThemeData(
-      primaryColor: primaryColor,
-      appBarTheme: const AppBarTheme(
-        color: primaryColor,
-      ),
-      brightness: Brightness.light);
+    colorScheme:  const ColorScheme.dark(
+        background: Colors.white,
+      primary: primaryColor,
+      brightness: Brightness.light,
+    ),
+
+
+
+  );
   static final darkTheme = ThemeData(
-      primaryColor: darkGreyColor,
-      appBarTheme: const AppBarTheme(
-        color: darkGreyColor,
-      ),
-      brightness: Brightness.dark);
+    colorScheme:  const ColorScheme.dark(
+      background: darkGreyColor,
+      primary: darkGreyColor,
+      brightness: Brightness.dark
+    ),
+      );
+}
+TextStyle get subHeadingStyle {
+  return GoogleFonts.lato(
+    textStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 24.sp,
+      color: Get.isDarkMode?Colors.grey[400]:Colors.grey
+
+    )
+  );
+}
+TextStyle get headingStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 30.sp,
+      )
+  );
 }
