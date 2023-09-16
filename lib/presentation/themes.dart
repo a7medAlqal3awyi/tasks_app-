@@ -14,38 +14,49 @@ Color darkHeaderColor = Colors.grey.shade800;
 
 class Themes {
   static final lightTheme = ThemeData(
-    colorScheme:  const ColorScheme.dark(
-        background: Colors.white,
+    colorScheme: const ColorScheme.dark(
+      background: Colors.white,
       primary: primaryColor,
       brightness: Brightness.light,
     ),
-
-
-
   );
   static final darkTheme = ThemeData(
-    colorScheme:  const ColorScheme.dark(
-      background: darkGreyColor,
-      primary: darkGreyColor,
-      brightness: Brightness.dark
-    ),
-      );
-}
-TextStyle get subHeadingStyle {
-  return GoogleFonts.lato(
-    textStyle: TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 24.sp,
-      color: Get.isDarkMode?Colors.grey[400]:Colors.grey
-
-    )
+    colorScheme: const ColorScheme.dark(
+        background: darkGreyColor,
+        primary: darkGreyColor,
+        brightness: Brightness.dark),
   );
 }
-TextStyle get headingStyle {
+
+TextStyle get subHeadingStyle {
   return GoogleFonts.lato(
       textStyle: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 30.sp,
-      )
-  );
+          fontSize: 24.sp,
+          color: Get.isDarkMode ? Colors.grey[400] : Colors.grey));
+}
+
+TextStyle get headingStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 30.sp,
+  ));
+}
+
+TextStyle get titleStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 16.sp,
+  ));
+}
+
+TextStyle get subTitleStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 14.sp,
+    color: Get.isDarkMode ? Colors.grey[100] : Colors.grey[600],
+  ));
 }

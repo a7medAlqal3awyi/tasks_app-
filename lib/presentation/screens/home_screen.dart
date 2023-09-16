@@ -1,10 +1,13 @@
+import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:task_app/presentation/themes.dart';
 import '../../services/theme_services.dart';
 import '../widgets/button.dart';
+import 'add_task_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,7 +26,46 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           _addTaskBar(),
+          _addDateBar()
         ],
+      ),
+    );
+  }
+
+  _addDateBar() {
+    return Container(
+      margin: EdgeInsets.only(top: 20.w, left: 20.w),
+      child: DatePicker(
+        DateTime.now(),
+        height: 100.h,
+        width: 80.w,
+        initialSelectedDate: DateTime.now(),
+        selectionColor: primaryColor,
+        selectedTextColor: Colors.white,
+        dateTextStyle: GoogleFonts.lato(
+          textStyle: TextStyle(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey,
+          ),
+        ),
+        dayTextStyle: GoogleFonts.lato(
+          textStyle: TextStyle(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey,
+          ),
+        ),
+        monthTextStyle: GoogleFonts.lato(
+          textStyle: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey,
+          ),
+        ),
+        onDateChange: (date) {
+          _selectedDate = date;
+        },
       ),
     );
   }
@@ -45,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           MyButton(
-            onTap: () => null,
+            onTap: () => Get.to(AddTaskScreen()),
             label: '+ Add Task',
           )
         ],
