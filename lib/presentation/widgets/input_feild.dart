@@ -29,10 +29,9 @@ class MyInputFiled extends StatelessWidget {
             style: titleStyle,
           ),
           Container(
-            height: 52.h,
+            height: 40.h,
             margin: EdgeInsets.only(top: 8.h),
             padding: EdgeInsets.only(left: 16.w),
-
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey, width: 1),
                 borderRadius: BorderRadius.circular(12.w)),
@@ -40,6 +39,7 @@ class MyInputFiled extends StatelessWidget {
               children: [
                 Expanded(
                     child: TextFormField(
+                  readOnly: widget == null ? false : true,
                   autofocus: false,
                   cursorColor:
                       Get.isDarkMode ? Colors.grey[100] : Colors.grey[700],
@@ -54,14 +54,19 @@ class MyInputFiled extends StatelessWidget {
                         width: 0,
                       ),
                     ),
-                    enabledBorder:  UnderlineInputBorder(
+                    enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: context.theme.colorScheme.background,
                         width: 0,
                       ),
                     ),
                   ),
-                )),
+                ),),
+                widget == null
+                    ? Container()
+                    : Container(
+                        child: widget,
+                      )
               ],
             ),
           )

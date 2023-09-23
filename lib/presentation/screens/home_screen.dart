@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:task_app/presentation/themes.dart';
 import '../../services/theme_services.dart';
 import '../widgets/button.dart';
-import 'add_task_bar.dart';
+import 'add_task_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,8 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: darkGreyColor,
       appBar: _appBar(),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _addTaskBar(),
           _addDateBar()
@@ -32,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  _validateDate(){}
   _addDateBar() {
     return Container(
       margin: EdgeInsets.only(top: 20.w, left: 20.w),
@@ -41,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
         width: 80.w,
         initialSelectedDate: DateTime.now(),
         selectionColor: primaryColor,
-        selectedTextColor: Colors.white,
         dateTextStyle: GoogleFonts.lato(
           textStyle: TextStyle(
             fontSize: 16.sp,
@@ -87,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           MyButton(
-            onTap: () => Get.to(AddTaskScreen()),
+            onTap: () => Get.to(const AddTaskScreen()),
             label: '+ Add Task',
           )
         ],
