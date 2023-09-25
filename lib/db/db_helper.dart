@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:task_app/models/task_model.dart';
@@ -43,5 +44,11 @@ class DBHelper {
   static Future<List<Map<String, dynamic>>> query() async {
     debugPrint("query function called");
     return await _db!.query(_tableName);
+  }
+  static   delete (TaskModel task)async{
+    return await _db?.delete(_tableName,
+        where: "id=?",
+        whereArgs: [task.id]
+    );
   }
 }

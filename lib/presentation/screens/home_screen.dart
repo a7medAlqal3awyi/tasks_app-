@@ -1,6 +1,7 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +9,7 @@ import 'package:task_app/controller/task_controller.dart';
 import 'package:task_app/presentation/themes.dart';
 import '../../services/theme_services.dart';
 import '../widgets/button.dart';
+import '../widgets/task_title.dart';
 import 'add_task_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,11 +33,40 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           _addTaskBar(),
           _addDateBar(),
+          _showTasks(),
         ],
       ),
     );
   }
 
+  _showTasks() {
+    return Expanded(
+      child: Obx(() {
+        return ListView.builder(
+          itemCount: _taskController.taskList.length,
+          itemBuilder: (BuildContext context, int index) {
+            print(_taskController.taskList.length);
+            return AnimationConfiguration.staggeredList(
+                position: index,
+                child: SlideAnimation(
+                  child: FadeInAnimation(
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            print("Tapped");
+                          },
+                          child: TaskTitle(_taskController.taskList[index]),
+                        ),
+                      ],
+                    ),
+                  ),
+                ));
+          },
+        );
+      }),
+    );
+  }
 
   _addDateBar() {
     return Container(
@@ -91,7 +122,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           MyButton(
-            onTap: () => Get.to(const AddTaskScreen()),
+            onTap: () async {
+              await Get.to(const AddTaskScreen());
+              _taskController.getTask();
+            },
             label: '+ Add Task',
           )
         ],

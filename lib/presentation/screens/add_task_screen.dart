@@ -228,7 +228,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           height: 5.h,
         ),
         Wrap(
-          children: List<Widget>.generate(3, (index) {
+          children: List<Widget>.generate(4, (index) {
             return Padding(
               padding: EdgeInsets.only(right: 8.w),
               child: GestureDetector(
@@ -243,6 +243,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       ? primaryColor
                       : index == 1
                           ? pinkColor
+                      : index == 2?
+                      deepOrange
                           : yellowColor,
                   child: _selectedColor == index
                       ? const Icon(
