@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:task_app/controller/task_controller.dart';
 import 'package:task_app/presentation/themes.dart';
 import '../../services/theme_services.dart';
 import '../widgets/button.dart';
@@ -18,29 +19,30 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   DateTime _selectedDate = DateTime.now();
+  final _taskController = Get.put(TaskController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: darkGreyColor,
+      backgroundColor: context.theme.colorScheme.background,
       appBar: _appBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _addTaskBar(),
-          _addDateBar()
+          _addDateBar(),
         ],
       ),
     );
   }
 
-  _validateDate(){}
+
   _addDateBar() {
     return Container(
       margin: EdgeInsets.only(top: 20.w, left: 20.w),
       child: DatePicker(
         DateTime.now(),
-        height: 100.h,
+        height: 80.h,
         width: 80.w,
         initialSelectedDate: DateTime.now(),
         selectionColor: primaryColor,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:task_app/controller/task_controller.dart';
+import 'package:task_app/models/task_model.dart';
 import 'package:task_app/presentation/themes.dart';
 import 'package:task_app/presentation/widgets/button.dart';
 
@@ -15,6 +17,7 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
+  final TaskController _taskController = Get.put(TaskController());
   final _titleController = TextEditingController();
   final _noteController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
@@ -36,7 +39,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     return Scaffold(
       appBar: _appBar(context),
       body: Container(
-        color: darkGreyColor,
+        color: context.theme.colorScheme.background,
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: SingleChildScrollView(
           child: Column(
@@ -110,7 +113,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 title: 'Remind',
                 hint: "$_selectedReminder minutes early",
                 widget: DropdownButton(
-                  icon: Icon(Icons.keyboard_arrow_down),
+                  icon: const Icon(Icons.keyboard_arrow_down),
                   underline: Container(
                     height: 0,
                   ),
@@ -163,7 +166,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _colorPallete(),
-                  MyButton(label: 'Create task', onTap: () =>_vailidateDate(),)
+                  MyButton(
+                    label: 'Create task',
+                    onTap: () => _validateDate(),
+                  )
                 ],
               ),
               SizedBox(
@@ -176,19 +182,38 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     );
   }
 
-  _vailidateDate() {
-    if (_titleController.text.isEmpty & _noteController.text.isEmpty) {
+  _validateDate() {
+    if (_titleController.text.isNotEmpty & _noteController.text.isNotEmpty) {
+      _addTaskToDb();
       Get.back();
     } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
       Get.snackbar(
-        backgroundColor: Colors.white,
-        'Required',
-        "All fields are required",
-        snackPosition: SnackPosition.BOTTOM,
-        colorText: pinkColor,
-        icon: Icon(Icons.warning_amber_rounded,color: Colors.red,)
-      );
+          backgroundColor: Colors.white,
+          'Required',
+          "All fields are required",
+          snackPosition: SnackPosition.BOTTOM,
+          colorText: pinkColor,
+          icon: const Icon(
+            Icons.warning_amber_rounded,
+            color: Colors.red,
+          ));
     }
+  }
+
+  _addTaskToDb() async {
+    int value = await _taskController.addTask(
+        task: TaskModel(
+      color: _selectedColor,
+      title: _titleController.text,
+      endTime: _endTime,
+      isCompleted: 0,
+      note: _noteController.text,
+      reminder: _selectedReminder,
+      repeat: _selectedRepeat,
+      startTime: _startTime,
+      date: DateFormat.yMd().format(_selectedDate),
+    ));
+    debugPrint("My id is " "$value");
   }
 
   _colorPallete() {
@@ -220,7 +245,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           ? pinkColor
                           : yellowColor,
                   child: _selectedColor == index
-                      ? Icon(
+                      ? const Icon(
                           Icons.done,
                           color: Colors.white,
                           size: 16,
